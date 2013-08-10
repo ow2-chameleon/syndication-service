@@ -47,7 +47,7 @@ import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
 /**
- * Feed Reader Implementation. This implementation retrieved feed entires on
+ * Feed Reader Implementation. This implementation retrieved feed entries on
  * startup and periodically.
  */
 @Component(name = "org.ow2.chameleon.syndication.rome.reader", immediate = true)
