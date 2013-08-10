@@ -120,7 +120,7 @@ public class FeedReaderImplTest {
     @Test
     public void testGetLastEntry() throws Exception {
         URL ak = new URL(
-                "http://blog.akquinet.de/category/all/osgi-and-mobile-solutions/feed/");
+                "http://blog.akquinet.de/category/all/feed/");
         FeedReaderImpl reader = new FeedReaderImpl(ak, 1000, 5);
         FeedEntry entry = reader.getLastEntry();
         Assert.assertNotNull(entry.title());
@@ -133,7 +133,7 @@ public class FeedReaderImplTest {
     @Test
     public void testGetRecentEntries() throws Exception {
         URL ak = new URL(
-                "http://blog.akquinet.de/category/all/osgi-and-mobile-solutions/feed/");
+                "http://blog.akquinet.de/category/all/feed/");
         FeedReaderImpl reader = new FeedReaderImpl(ak, 1000, 5);
         List<FeedEntry> list = reader.getRecentEntries();
         for (FeedEntry e : list) {
