@@ -55,19 +55,13 @@ public class RomeWriterTest {
                 "org.ops4j.pax.logging").artifactId("pax-logging-api")
                 .versionAsInProject(),
 
-        CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication")
-                .artifactId("syndication-service").versionAsInProject(),
-                CoreOptions.mavenBundle().groupId(
-                        "org.ow2.chameleon.syndication").artifactId("rome")
-                        .versionAsInProject(), CoreOptions.mavenBundle()
-                        .groupId("jdom").artifactId(
-                                "org.ow2.chameleon.commons.jdom")
-                        .versionAsInProject(), CoreOptions.mavenBundle()
-                        .groupId("javax.servlet").artifactId(
-                                "org.ow2.chameleon.commons.servlet-api")
-                        .versionAsInProject(), CoreOptions.mavenBundle()
-                        .groupId("org.osgi").artifactId("org.osgi.compendium")
-                        .versionAsInProject()));
+                CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication").artifactId("syndication-service").versionAsInProject(),
+                CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication").artifactId("rome-syndication-service").versionAsInProject(),
+                CoreOptions.mavenBundle().groupId("org.apache.servicemix.bundles").artifactId("org.apache.servicemix.bundles.jdom").versionAsInProject(),
+                CoreOptions.mavenBundle().groupId("org.mortbay.jetty").artifactId("servlet-api-2.5").versionAsInProject(),
+                CoreOptions.mavenBundle().groupId("org.osgi").artifactId("org.osgi.compendium").versionAsInProject()),
+                CoreOptions.mavenBundle().groupId("org.apache.felix").artifactId("org.apache.felix.eventadmin")
+                        .versionAsInProject());
         return opt;
     }
 
@@ -181,10 +175,6 @@ public class RomeWriterTest {
 
     @Test
     public void testEventAdmin() throws Exception {
-        context
-                .installBundle(
-                        "http://mirror.lwnetwork.org.uk/APACHE//felix/org.apache.felix.eventadmin-1.2.14.jar")
-                .start();
         EventCollector collector = new EventCollector();
         collector.start(context, FeedReader.NEW_ENTRY_TOPIC);
 
@@ -249,7 +239,7 @@ public class RomeWriterTest {
         private ServiceRegistration reg;
 
         public void start(BundleContext context, String topic) {
-            Properties props = new Properties();
+            Dictionary props = new Properties();
             props.put(EventConstants.EVENT_TOPIC, topic);
             reg = context.registerService(EventHandler.class.getName(), this,
                     props);

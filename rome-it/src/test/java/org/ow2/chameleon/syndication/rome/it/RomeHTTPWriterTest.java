@@ -70,35 +70,12 @@ public class RomeHTTPWriterTest {
                                                 .artifactId("pax-logging-api")
                                                 .versionAsInProject(),
 
-                                        CoreOptions
-                                                .mavenBundle()
-                                                .groupId(
-                                                        "org.ow2.chameleon.syndication")
-                                                .artifactId(
-                                                        "syndication-service")
-                                                .versionAsInProject(),
-                                        CoreOptions
-                                                .mavenBundle()
-                                                .groupId(
-                                                        "org.ow2.chameleon.syndication")
-                                                .artifactId("rome")
-                                                .versionAsInProject(),
-                                        CoreOptions
-                                                .mavenBundle()
-                                                .groupId("jdom")
-                                                .artifactId(
-                                                        "org.ow2.chameleon.commons.jdom")
-                                                .versionAsInProject(),
-                                        CoreOptions
-                                                .mavenBundle()
-                                                .groupId("javax.servlet")
-                                                .artifactId(
-                                                        "org.ow2.chameleon.commons.servlet-api")
-                                                .versionAsInProject(),
-                                        CoreOptions.mavenBundle().groupId(
-                                                "org.osgi").artifactId(
-                                                "org.osgi.compendium")
-                                                .versionAsInProject(),
+                                        CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication").artifactId("syndication-service").versionAsInProject(),
+                                        CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication").artifactId("rome-syndication-service").versionAsInProject(),
+                                        CoreOptions.mavenBundle().groupId("org.apache.servicemix.bundles").artifactId("org.apache.servicemix.bundles.jdom").versionAsInProject(),
+                                        CoreOptions.mavenBundle().groupId("org.mortbay.jetty").artifactId("servlet-api-2.5").versionAsInProject(),
+                                        CoreOptions.mavenBundle().groupId("org.osgi").artifactId("org.osgi" +"" +".compendium").versionAsInProject(),
+
                                         CoreOptions.mavenBundle().groupId(
                                                 "org.apache.felix").artifactId(
                                                 "org.apache.felix.http.jetty")
@@ -106,10 +83,7 @@ public class RomeHTTPWriterTest {
 
                         CoreOptions
                                 .systemProperty("org.osgi.service.http.port")
-                                .value(PORT) // ,
-                // PaxRunnerOptions.rawPaxRunnerOption("javaHome",
-                // "/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/Home")
-                );
+                                .value(PORT));
         return opt;
     }
 
@@ -293,7 +267,7 @@ public class RomeHTTPWriterTest {
         private ServiceRegistration reg;
 
         public void start(BundleContext context, String topic) {
-            Properties props = new Properties();
+            Dictionary props = new Properties();
             props.put(EventConstants.EVENT_TOPIC, topic);
             reg = context.registerService(EventHandler.class.getName(), this,
                     props);

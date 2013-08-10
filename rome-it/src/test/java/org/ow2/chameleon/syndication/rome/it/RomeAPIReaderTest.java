@@ -16,27 +16,19 @@ import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.Configuration;
 import org.ops4j.pax.exam.junit.JUnit4TestRunner;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.event.Event;
-import org.osgi.service.event.EventConstants;
-import org.osgi.service.event.EventHandler;
 import org.ow2.chameleon.testing.helpers.IPOJOHelper;
 import org.ow2.chameleon.testing.helpers.OSGiHelper;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.List;
 
 @RunWith(JUnit4TestRunner.class)
 public class RomeAPIReaderTest {
 
     @Inject
     private BundleContext context;
-
     private OSGiHelper osgi;
-
     private IPOJOHelper ipojo;
 
     @Configuration
@@ -44,29 +36,21 @@ public class RomeAPIReaderTest {
 
         Option[] opt = CoreOptions.options(CoreOptions.felix(),
 
-        CoreOptions.provision(CoreOptions.mavenBundle().groupId(
-                "org.apache.felix").artifactId("org.apache.felix.ipojo")
-                .versionAsInProject(), CoreOptions.mavenBundle().groupId(
-                "org.apache.felix").artifactId("org.apache.felix.configadmin")
-                .versionAsInProject(), CoreOptions.mavenBundle().groupId(
-                "org.ow2.chameleon.testing").artifactId("osgi-helpers")
-                .versionAsInProject(), CoreOptions.mavenBundle().groupId(
-                "org.ops4j.pax.logging").artifactId("pax-logging-api")
-                .versionAsInProject(),
+                CoreOptions.provision(CoreOptions.mavenBundle().groupId(
+                        "org.apache.felix").artifactId("org.apache.felix.ipojo")
+                        .versionAsInProject(), CoreOptions.mavenBundle().groupId(
+                        "org.apache.felix").artifactId("org.apache.felix.configadmin")
+                        .versionAsInProject(), CoreOptions.mavenBundle().groupId(
+                        "org.ow2.chameleon.testing").artifactId("osgi-helpers")
+                        .versionAsInProject(), CoreOptions.mavenBundle().groupId(
+                        "org.ops4j.pax.logging").artifactId("pax-logging-api")
+                        .versionAsInProject(),
 
-        CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication")
-                .artifactId("syndication-service").versionAsInProject(),
-                CoreOptions.mavenBundle().groupId(
-                        "org.ow2.chameleon.syndication").artifactId("rome")
-                        .versionAsInProject(), CoreOptions.mavenBundle()
-                        .groupId("jdom").artifactId(
-                                "org.ow2.chameleon.commons.jdom")
-                        .versionAsInProject(), CoreOptions.mavenBundle()
-                        .groupId("javax.servlet").artifactId(
-                                "org.ow2.chameleon.commons.servlet-api")
-                        .versionAsInProject(), CoreOptions.mavenBundle()
-                        .groupId("org.osgi").artifactId("org.osgi.compendium")
-                        .versionAsInProject()));
+                        CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication").artifactId("syndication-service").versionAsInProject(),
+                        CoreOptions.mavenBundle().groupId("org.ow2.chameleon.syndication").artifactId("rome-syndication-service").versionAsInProject(),
+                        CoreOptions.mavenBundle().groupId("org.apache.servicemix.bundles").artifactId("org.apache.servicemix.bundles.jdom").versionAsInProject(),
+                        CoreOptions.mavenBundle().groupId("org.mortbay.jetty").artifactId("servlet-api-2.5").versionAsInProject(),
+                        CoreOptions.mavenBundle().groupId("org.osgi").artifactId("org.osgi.compendium").versionAsInProject()));
         return opt;
     }
 
