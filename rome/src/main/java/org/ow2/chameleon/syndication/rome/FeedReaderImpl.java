@@ -183,17 +183,24 @@ public class FeedReaderImpl implements FeedReader {
      */
     private synchronized void load() throws FeedException, IOException {
         SyndFeedInput input = new SyndFeedInput();
-        m_feed = input.build(new XmlReader(m_url));
+        ClassLoader original = Thread.currentThread().getContextClassLoader();
+        try {
+            Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+            m_feed = input.build(new XmlReader(m_url));
 
-        // Look for new entries
-        for (FeedEntry entry : getRecentEntries()) {
-            if (m_lastDate == null
-                    || m_lastDate.before(entry.publicationDate())) {
-                postEvent(entry);
+            // Look for new entries
+            for (FeedEntry entry : getRecentEntries()) {
+                if (m_lastDate == null
+                        || m_lastDate.before(entry.publicationDate())) {
+                    postEvent(entry);
+                }
             }
-        }
-        if (getLastEntry() != null) {
-            m_lastDate = getLastEntry().publicationDate();
+            if (getLastEntry() != null) {
+                m_lastDate = getLastEntry().publicationDate();
+            }
+        } finally {
+            // Revert the TCCL
+            Thread.currentThread().setContextClassLoader(original);
         }
     }
 
